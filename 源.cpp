@@ -1,54 +1,19 @@
-#include<stdio.h>
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h> 
 int main()
 {
-    int a, b, c, n, d, e, f, g;/杩欐槸鎵撳嵃涓�涓彵褰㈢殑鍨冨溇浠ｇ爜/
-    scanf("%d", &n);
-    d = b = (n + 1) / 2;
-    g = n;
-    if (n < 1)
+    int a, sum=0;//判断一个整数的二进制有几个一
+    scanf("%d", &a);
+    while (a)
     {
-        printf("Error");
-    }
-    else if (n % 2 == 0)
-    {
-        printf("Invalid");
-    }
-    else
-    {
-        for (c = 1; c <= b; c++, n -= 2)
+       
+        if ((a & 1) == 1)
         {
-            a = (n - 1) / 2, d = 2 * c - 1;
-            for (e = 1; e <= a; e++)
-            {
-                printf(" ");
-            }
-            for (f = 1; f <= d; f++)
-            {
-                printf("*");
-            }
-            for (e = 1; e <= a; e++)
-            {
-                printf(" ");
-            }
-            printf("\n");
-        }
-        n = g;
-        for (c = 2; c <= b; c++, n -= 2)
-        {
-            a = c - 1, d = g - 2 * (c - 1);
-            for (e = 1; e <= a; e++)
-            {
-                printf(" ");
-            }
-            for (f = 1; f <= d; f++)
-            {
-                printf("*");
-            }
-            for (e = 1; e <= a; e++)
-            {
-                printf(" ");
-            }
-            printf("\n");
-        }
+            sum++;
+       }
+        a = a >> 1;
     }
+    printf("%d", sum);
+    return 0;
 }
+
