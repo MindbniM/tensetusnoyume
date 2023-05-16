@@ -123,25 +123,21 @@ void put(char ar[hangs][lies],char er[hangs][lies],int a,int b)
 			printf("坐标非法，请重新输入\n");
 	} while (1);
 }
-void open(char ar[hang][lie], char er[hangs][lies], int a, int b,int sum)
+void open(char ar[hang][lie], char er[hangs][lies], int a, int b)
 {
-	sum--;
-	
-		for (int i = a - 1; i < a+1 ; i++)
+		if (a < 0 || a >= hang || b < 0 || b >= lie || ar[a][b] == '0')
 		{
-			for (int j = b - 1; j < b+1 ; j++)
+			return;
+		}
+		ar[a][b] = '0';  // 标记当前格子已经展开
+		if (er[a][b] == 0)
+		{
+			for (int i = -1; i <= 1; i++) 
 			{
-				if (i >= 0 && j >= 0 && i < hangs && j < lies)
+				for (int j = -1; j <= 1; j++) 
 				{
-					if (ar[i][j] != ' ' && look(er, i, j) + '0' == '0' && er[i][j] != '1')
-					{
-						ar[i][j] = ' ';
-						open(ar, er, i, j, sum);
-					}
-					if (look(er, i, j) + '0' != '0')
-					{
-						ar[i][j] = look(er, i, j) + '0' ;
-					}
+					if (i == 0 && j == 0) continue;
+					open(ar,er,a + i, b + j );  // 递归展开当前格子周围的方块
 				}
 			}
 		}

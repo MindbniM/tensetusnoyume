@@ -26,4 +26,4 @@ int look(char er[hangs][lies], int a, int b);//判断周围雷子的数量
 
 void put();//坐标循环
 
-void open(char ar[hang][lie], char er[hang][lie], int a, int b,int sum);//还没扩展，暂时没用，预计用递归实现开空格
+void open(char ar[hang][lie], char er[hang][lie], int a, int b,int sum);//预计用递归实现开空格

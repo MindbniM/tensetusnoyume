@@ -12,7 +12,7 @@ void game()
 	int a, b;
 	char ar[hangs][lies], er[hangs][lies];
 	initialize(ar,  er);
-	par(er);
+	//par(er);
 	put(ar,er,&a,&b);
 	//par(ar);
 }
