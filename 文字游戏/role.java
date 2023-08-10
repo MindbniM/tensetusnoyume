@@ -8,9 +8,12 @@ public class role {
     private int Fattack;
     private int defense;
     private int magic;
+    private int G;
+    private boolean defenses=false;
+    private int bloodnum=3;
     public  role(){
     }
-    public  role(String name,int blood,int Critnum,int dogre,int Fattack,int defense,int magic){
+    public  role(String name,int blood,int Critnum,int dogre,int Fattack,int defense,int magic,int G){
         this.name=name;
         this.blood=blood;
         this.Critnum=Critnum;
@@ -18,8 +21,9 @@ public class role {
         this.Fattack=Fattack;
         this.defense=defense;
         this.magic=magic;
+        this.G=G;
     }
-    public  void setrole(String name,int blood,int Critnum,int dogre,int Fattack,int defense,int magic){
+    public  void setrole(String name,int blood,int Critnum,int dogre,int Fattack,int defense,int magic,int G){
         this.name=name;
         this.blood=blood;
         this.Critnum=Critnum;
@@ -27,6 +31,7 @@ public class role {
         this.Fattack=Fattack;
         this.defense=defense;
         this.magic=magic;
+        this.G=G;
     }
     public void setname(String name){
         this.name=name;
@@ -46,8 +51,17 @@ public class role {
     public void setdefense(int defense){
         this.defense=defense;
     }
-    public void setmagic(){
+    public void setmagic(int magic){
         this.magic=magic;
+    }
+    public void setG(int G){
+        this.G=G;
+    }
+    public void setdefenses(boolean defenses){
+        this.defenses=defenses;
+    }
+    public void setbloodnum(int bloodnum){
+        this.bloodnum=bloodnum;
     }
     public String getname(){
         return name;
@@ -70,26 +84,48 @@ public class role {
     public int getmagic(){
         return magic;
     }
+    public int getG(){
+        return G;
+    }
+    public boolean getdefenses(){
+        return defenses;
+    }
+    public int getbloodnum(){
+        return bloodnum;
+    }
     public void attack(role s){
         Random a=new Random();
         int Critnums=a.nextInt(100);
         int dogres=a.nextInt(100);
-        int r=a.nextInt(Fattack/5)+Fattack;
+        int r=a.nextInt(this.Fattack/5)+this.Fattack;
+        r-=s.getdefense();
+        if(r<0){
+            r=0;
+        }
+        if(s.getdefenses()){
+            r/=5;
+        }
         if(dogres<=s.dogre){
             r*=0;
             System.out.println(this.name+"攻击了"+s.name+",但"+s.name+"闪避了该攻击");
         }
         else if(Critnums<=Critnum){
             r*=2;
-            r-=s.defense;
             System.out.println(this.name+"攻击了"+s.name+"暴击造成"+r+"伤害");
         }
         else {
-            r-=s.defense;
             System.out.println(this.name + "攻击了" + s.name + "造成" + r + "伤害");
         }
             s.setblood(s.blood - r > 0 ? s.blood - r : 0);
             System.out.println(s.name + "还有" + s.getblood() + "的血量");
-
+    }
+    public void Ubloodnum(role s){
+        if(s.getbloodnum()==0){
+            System.out.println("没有血瓶了,无法回复");
+            return;
+        }
+        s.setblood(s.getblood()+100);
+        s.setbloodnum(s.getbloodnum()-1);
+        System.out.printf(s.getname()+"使用药剂,回复100,"+s.getname()+"还有"+s.getblood()+ "的血量\n");
     }
 }
