@@ -1,6 +1,8 @@
 #include "game.h"
 #define _CRT_SECURE_NO_WARNINGS
 
+int sum;
+sum = hang * lie - zhadan;
 void initialize(char ar[hangs][lies], char er[hangs][lies])
 {
 	int a, b, c;
@@ -67,38 +69,35 @@ void par(char ar[hangs][lies])
 }
 int handle(char ar[hangs][lies], char er[hangs][lies], int a, int b)
 {
-	int sum;
-	sum =hang*lie-zhadan;
-	while (sum)
+	if (er[a][b] == '1')
 	{
-		
-			if (er[a][b] == '1')
-			{
-				printf("你太菜了\n");
-				par(er);
-				return 1;
-			}
-			else if (look(er, a, b))
-			{
-				ar[a ][b ] = look(er, a, b) + '0';
-				par(ar);
-				sum--;
-				put(ar, er, &a, &b);
-			}
-			else
-			{
-				ar[a][b] = ' ';
-				open(ar,er,a,b,&sum);
-				par(ar);
-				put(ar, er, &a, &b);
-			}
-			if (sum == 0)
-			{
-				printf("你赢了\n");
-				par(er);
-				return 1;
-			}
-			
+		printf("你输了\n");
+		par(er);
+		return 1;
+	}
+	else if (sum == 0)
+	{
+		printf("你赢了\n");
+		par(er);
+		return 1;
+	}
+	else if (look(er, a, b))
+	{
+		ar[a ][b ] = look(er, a, b) + '0';
+		par(ar);
+		sum--;
+		if (sum == 0)
+		{
+			printf("你赢了");
+			return 1;
+		}
+		put(ar, er, &a, &b);
+	}
+	else if(ar[a][b]=='*'&& ar[a][b]!=' ')
+	{
+		open(ar,er,a,b,sum);
+		par(ar);
+		put(ar, er, &a, &b);
 	}
 	
 }
@@ -123,22 +122,26 @@ void put(char ar[hangs][lies],char er[hangs][lies],int a,int b)
 			printf("坐标非法，请重新输入\n");
 	} while (1);
 }
-void open(char ar[hang][lie], char er[hangs][lies], int a, int b)
+void open(char ar[hangs][lies], char er[hangs][lies], int a, int b,int sum)
 {
-		if (a < 0 || a >= hang || b < 0 || b >= lie || ar[a][b] == '0')
+	if (a < 1 || a > hang || b < 1 || b > lie || ar[a][b] == ' ')
+	{
+		return;
+	}
+	if (look(er, a, b)&& er[a][b] != '1')
+	{
+		ar[a][b] = look(er, a, b) + '0';
+		sum--;
+		return;
+	}
+	ar[a][b] = ' ';  // 标记当前格子已经展开
+	sum--;
+	for (int i = -1; i <= 1; i++) 
+	{
+		for (int j = -1; j <= 1; j++) 
 		{
-			return;
+			if (i == 0 && j == 0) continue;
+			open(ar,er,a + i, b + j ,sum);  // 递归展开当前格子周围的方块
 		}
-		ar[a][b] = '0';  // 标记当前格子已经展开
-		if (er[a][b] == 0)
-		{
-			for (int i = -1; i <= 1; i++) 
-			{
-				for (int j = -1; j <= 1; j++) 
-				{
-					if (i == 0 && j == 0) continue;
-					open(ar,er,a + i, b + j );  // 递归展开当前格子周围的方块
-				}
-			}
-		}
+	}
 }
