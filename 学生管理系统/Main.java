@@ -1,37 +1,37 @@
 // 按两次 Shift 打开“随处搜索”对话框并输入 `show whitespaces`，
 // 然后按 Enter 键。现在，您可以在代码中看到空格字符。
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
-        Student[] arr=new Student[100];
-        Initialize(arr);
-        int a=1;
-        while(a!=0) {
+        ArrayList<Student> List=new ArrayList<>();
+        loop:while(true) {
             Screen();
-            a=sc.nextInt();
+            int a=sc.nextInt();
             switch (a) {
                 case 0:{
                     System.out.println("退出");
-                    break;
+                    break loop;
                 }
                 case 1: {
-                    AddStudent(arr);
+                    AddStudent(List);
                     break;
                 }
                 case 2:{
-                    PutStudent(arr);
+                    PutStudent(List);
                     break;
                 }
                 case 3:{
-                    DeleteS(arr);
+                    DeleteS(List);
                     break;
                 }
                 case 4:{
-                    FindB(arr);
+                    FindB(List);
+                    break;
                 }
                 case 5:{
-                    SetS(arr);
+                    SetS(List);
                     break;
                 }
                 default:{
@@ -49,59 +49,34 @@ public class Main {
         System.out.println("5.修改学生信息");
         System.out.println("0.退出系统");
     }
-    public static boolean Repeat(Student[] arr, String id){
-        for(int i=0;!ValinS(arr[i].getId());i++){
-            Student s=arr[i];
-            if((s.getId()).equals(id)){
+    public static boolean Repeat(ArrayList<Student> List, String id){
+        for(int i=0;i<List.size();i++){
+            if((List.get(i).getId()).equals(id)){
                 System.out.println("学生id重复");
                 return false;
             }
         }
         return true;
     }
-    public static void AddStudent(Student[] arr){
+    public static void AddStudent(ArrayList<Student> List){
         Scanner sc=new Scanner(System.in);
-        for(int i=0;i<arr.length;i++){
-            if(ValinS(arr[i].getId())){
-                Student s=new Student();
-                System.out.println("输入学生信息:id,name,age");
-                s.Students(sc.next(), sc.next(),sc.nextInt());
-                if(Repeat(arr,s.getId())) {
-                    arr[i] = s;
-                    System.out.println("添加成功");
-                    break;
-                }
-                else{
-                    System.out.println("id重复,添加失败");
-                    break;
-                }
-            }
-        }
-    }
-    public static void Initialize(Student[] arr){
-        for(int i=0;i<arr.length;i++){
-            Student s=new Student("0","0",0);
-            arr[i]=s;
-        }
-    }
-    public static void PutStudent(Student[] arr){
-        for (Student s : arr) {
-            if (!ValinS(s.getId())) {
-                s.putStudent();
-            } else {
-                break;
-            }
-        }
-    }
-    public static boolean ValinS(String id){
-        if(id.equals("0")){
-            return true;
+        Student s=new Student();
+        System.out.println("输入学生信息:id,name,age");
+        s.Students(sc.next(), sc.next(),sc.nextInt());
+        if(Repeat(List,s.getId())) {
+            List.add(s);
+            System.out.println("添加成功");
         }
         else{
-            return false;
+            System.out.println("id重复,添加失败");
         }
     }
-    public static void FindB(Student[] arr){
+    public static void PutStudent(ArrayList<Student> List){
+        for (int i = 0; i < List.size(); i++) {
+            List.get(i).putStudent();
+        }
+    }
+    public static void FindB(ArrayList<Student> List){
         Scanner sc=new Scanner(System.in);
         int b=1;
         while(b!=0) {
@@ -111,15 +86,14 @@ public class Main {
             System.out.println("0.退出查找");
             b=sc.nextInt();
             switch(b){
-                case 1:{
-                    FindId(arr);
+                case 1:
+                    int i=FindId(List);
+                    Printf(List,i);
                     break;
-                }
-                case 2:{
-                    FindName(arr);
+                case 2:
+                    FindName(List);
                     break;
-                }
-                case 3:{
+                case 0:{
                     System.out.println("退出查找");
                     break;
                 }
@@ -131,65 +105,47 @@ public class Main {
 
         }
     }
-    public static void FindId(Student[] arr){
-        Scanner sc=new Scanner(System.in);
+    public static int FindId(ArrayList<Student> List) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("输入要查找的id");
-        String s=sc.next();
-        int couts=0;
-        for(int i=0;!ValinS(arr[i].getId());i++){
-            if(s.equals(arr[i].getId())){
-                Student S=arr[i];
-                S.putStudent();
-                couts++;
-                break;
+        String s = sc.next();
+        for (int i = 0; i < List.size(); i++) {
+            if (s.equals(List.get(i).getId())) {
+                return i;
             }
         }
-        System.out.printf("找到%d个结果\n",couts);
+        return -1;
     }
-    public static void FindName(Student[] arr){
+    public static void FindName(ArrayList<Student> List){
         Scanner sc=new Scanner(System.in);
         System.out.println("输入要查找的name");
         String s=sc.next();
-        int couts=0;
-        for(int i=0;!ValinS(arr[i].getId());i++){
-            if(s.equals(arr[i].getName())){
-                Student S=arr[i];
-                S.putStudent();
-                couts++;
+        int count=0;
+        for(int i=0;i<List.size();i++){
+            if(s.equals(List.get(i).getName())){
+                List.get(i).putStudent();
+                count++;
             }
         }
-        System.out.printf("找到%d个结果\n",couts);
+        System.out.println("找到"+count+"个结果");
     }
-    public static void DeleteS(Student[] arr){
-        Scanner sc=new Scanner(System.in);
-        System.out.println("输入要删除的学生id");
-        String s=sc.next();
-        int i=0,j=0,couts=0;
-        for(i=0;!ValinS(arr[i].getId());i++){
-            if(!s.equals(arr[i].getId())){
-                Student s1=new Student();
-                s1.setId(arr[i].getId());
-                s1.setName(arr[i].getName());
-                s1.setAge(arr[i].getAge());
-                arr[j++]=s1;
-                couts++;
-            }
-        }
-        if(couts==i){
-            System.out.println("没找到该学生,删除失败");
-        }
-        else {
-            arr[j].setId("0");
+    public static void DeleteS(ArrayList<Student> List){
+        int i=FindId(List);
+        if(i!=-1)
+        {
+            List.remove(i);
             System.out.println("删除成功");
         }
+        else
+            System.out.println("没找到");
     }
-    public static void SetS(Student[] arr){
+    public static void SetS(ArrayList<Student> List){
         Scanner sc=new Scanner(System.in);
         System.out.println("输入要修改的学生id");
         String s=sc.next();
-        for(int i=0;!ValinS(arr[i].getId());i++){
-            if(s.equals(arr[i].getId())){
-                arr[i].putStudent();
+        for(int i=0;i<List.size();i++){
+            if(s.equals(List.get(i).getId())){
+                Printf(List,i);
                 int a=1;
                 while(a!=0) {
                     System.out.println("选择修改内容");
@@ -202,21 +158,21 @@ public class Main {
                         case 1:{
                             System.out.println("输入新id");
                             s=sc.next();
-                            arr[i].setId(s);
+                            List.get(i).setId(s);
                             System.out.println("已修改");
                             break;
                         }
                         case 2:{
                             System.out.println("输入新name");
                             s=sc.next();
-                            arr[i].setName(s);
+                            List.get(i).setName(s);
                             System.out.println("已修改");
                             break;
                         }
                         case 3:{
                             System.out.println("输入新age");
                             int S=sc.nextInt();
-                            arr[i].setAge(S);
+                            List.get(i).setAge(S);
                             System.out.println("已修改");
                             break;
                         }
@@ -232,5 +188,12 @@ public class Main {
                 }
             }
         }
+    }
+    public static void Printf(ArrayList<Student> List,int i){
+        if(i!=-1)
+            List.get(i).putStudent();
+        else
+            System.out.println("没找到");
+
     }
 }
