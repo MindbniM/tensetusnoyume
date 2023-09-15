@@ -8,9 +8,9 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         ArrayList<Student> SList=new ArrayList<>();
         ArrayList<Teacher> TList=new ArrayList<>();
-        Studentfaces(SList);
+        faces(SList);
     }
-    public static void Studentfaces(ArrayList List){
+    public static void faces(ArrayList List){
         loop:while(true) {
             Scanner sc=new Scanner(System.in);
             Screen();
@@ -67,8 +67,7 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         Student s=new Student();
         System.out.println("输入学生信息:Id,name,age");
-        s.Students(sc.next(),sc.next(),sc.nextInt());
-        s.setId("2023"+s.getId());
+        s.Peoples(sc.next(),sc.next(),sc.nextInt());
         if(isvalib(s.getId())) {
             List.add(s);
             System.out.println("添加成功");
@@ -80,7 +79,7 @@ public class Main {
     }
     public static void PutStudent(ArrayList<Student> List){
         for (int i = 0; i < List.size(); i++) {
-            List.get(i).putStudent();
+            List.get(i).putpeople();
         }
     }
     public static void FindB(ArrayList<Student> List){
@@ -130,7 +129,7 @@ public class Main {
         int count=0;
         for(int i=0;i<List.size();i++){
             if(s.equals(List.get(i).getName())){
-                List.get(i).putStudent();
+                List.get(i).putpeople();
                 count++;
             }
         }
@@ -203,7 +202,7 @@ public class Main {
     }
     public static void Printf(ArrayList<Student> List,int i){
         if(i!=-1) {
-            List.get(i).putStudent();
+            List.get(i).putpeople();
             System.out.println("找到了");
         }
         else
