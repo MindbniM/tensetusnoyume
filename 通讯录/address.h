@@ -29,7 +29,7 @@ typedef struct contact
 
 contact* Initcontact();//初始化
 
-void Extend(contact*c);//扩展空间
+void Extend(contact* c);//扩展空间
 
 void ADDcontauct(contact* c);//添加
 
@@ -42,4 +42,6 @@ void show(contact* c);//显示所有联系人
 void Changecontact(contact* c);//修改一个联系人
 
 void Dallcontact(contact* c);//清空联系人
+
+void Sortcon(contact*c);//按名称排序
 

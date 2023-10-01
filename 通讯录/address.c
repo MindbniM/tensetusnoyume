@@ -15,55 +15,55 @@ int IsFull(contact* c)
 {
 	return c->num == c->sz;
 }
-void Extend(contact** c)
+void Extend(contact* c)
 {
-	assert(*c);
-	size_t Sz = sizeof(contact) + (*c)->sz * sizeof(Node);
-	size_t newSize = sizeof(contact) + ((*c)->sz + SPACE) * sizeof(Node);
+	assert(c);
+	size_t Sz = sizeof(contact) + (c)->sz * sizeof(Node);
+	size_t newSize = sizeof(contact) + ((c)->sz + SPACE) * sizeof(Node);
 	contact* pc = (contact*)malloc(newSize);
 	if (pc == NULL)
 	{
 		perror("realloc:");
 		return;
 	}
-	memmove(pc,*c, Sz);
-	free(*c);
-	*c = pc;
-	(*c)->sz += SPACE;
+	memmove(pc,c, Sz);
+	free(c);
+	c = pc;
+	(c)->sz += SPACE;
 	printf("扩展成功\n");
 }
-void ADDcontauct(contact** c)
+void ADDcontauct(contact* c)
 {
-	if (IsFull(*c))
+	if (IsFull(c))
 	{
 		printf("通讯录已满,请扩展\n");
 		return;
 	}
 	printf("请输入名字:");
-	scanf("%s", (*c)->arr[(*c)->num].name);
+	scanf("%s", (c)->arr[(c)->num].name);
 	printf("请输入年龄:");
-	scanf("%d", &((*c)->arr[(*c)->num].age));
+	scanf("%d", &((c)->arr[(c)->num].age));
 	printf("请输入性别:");
-	scanf("%s", (*c)->arr[(*c)->num].sex);
+	scanf("%s", (c)->arr[(c)->num].sex);
 	printf("请输入电话:");
-	scanf("%s", (*c)->arr[(*c)->num].tele);
+	scanf("%s", (c)->arr[(c)->num].tele);
 	printf("请输入地址:");
-	scanf("%s", (*c)->arr[(*c)->num].addr);
-	(*c)->num++;
+	scanf("%s", (c)->arr[(c)->num].addr);
+	(c)->num++;
 	printf("添加成功\n");
 }
-int Find(contact** c, char* s)
+int Find(contact* c, char* s)
 {
-	for (int i = 0; i < (*c)->num; i++)
+	for (int i = 0; i < (c)->num; i++)
 	{
-		if (strcmp((*c)->arr[i].name, s) == 0)
+		if (strcmp((c)->arr[i].name, s) == 0)
 		{
 			return i;
 		}
 	}
 	return -1;
 }
-void Findcontact(contact** c)
+void Findcontact(contact* c)
 {
 	char Fname[NAME_MAX];
 	printf("输入要查找的人名\n");
@@ -76,9 +76,9 @@ void Findcontact(contact** c)
 	}
 	printf("%-20s%-5s%-5s%-12s%-30s\n", "名字", "年龄", "性别", "电话", "地址");
 	printf("%-20s%-5d%-5s%-12s%-30s\n",
-		(*c)->arr[ret].name, (*c)->arr[ret].age, (*c)->arr[ret].sex, (*c)->arr[ret].tele, (*c)->arr[ret].addr);
+		(c)->arr[ret].name, (c)->arr[ret].age, (c)->arr[ret].sex, (c)->arr[ret].tele, (c)->arr[ret].addr);
 }
-void Delecontact(contact** c)
+void Delecontact(contact* c)
 {
 	char Fname[NAME_MAX];
 	printf("输入要删除的人名\n");
@@ -89,23 +89,23 @@ void Delecontact(contact** c)
 		printf("没有这个人\n");
 		return;
 	}
-	for (int i = ret; i < (*c)->num; i++)
+	for (int i = ret; i < (c)->num; i++)
 	{
-		(*c)->arr[i] = (*c)->arr[i + 1];
+		(c)->arr[i] = (c)->arr[i + 1];
 	}
-	(*c)->num--;
+	(c)->num--;
 	printf("删除成功\n");
 }
-void show(contact** c)
+void show(contact* c)
 {
 	printf("%-20s%-5s%-5s%-12s%-30s\n", "名字", "年龄", "性别", "电话", "地址");
-	for (int i = 0; i < (*c)->num; i++)
+	for (int i = 0; i < (c)->num; i++)
 	{
 		printf("%-20s%-5d%-5s%-12s%-30s\n",
-			(*c)->arr[i].name, (*c)->arr[i].age, (*c)->arr[i].sex, (*c)->arr[i].tele, (*c)->arr[i].addr);
+			(c)->arr[i].name, (c)->arr[i].age, (c)->arr[i].sex, (c)->arr[i].tele, (c)->arr[i].addr);
 	}
 }
-void Changecontact(contact** c)
+void Changecontact(contact* c)
 {
 	char Fname[NAME_MAX];
 	printf("输入要修改的人名\n");
@@ -117,18 +117,18 @@ void Changecontact(contact** c)
 		return;
 	}
 	printf("请输入名字:");
-	scanf("%s", (*c)->arr[ret].name);
+	scanf("%s", (c)->arr[ret].name);
 	printf("请输入年龄:");
-	scanf("%d", &((*c)->arr[ret].age));
+	scanf("%d", &((c)->arr[ret].age));
 	printf("请输入性别:");
-	scanf("%s", (*c)->arr[ret].sex);
+	scanf("%s", (c)->arr[ret].sex);
 	printf("请输入电话:");
-	scanf("%s", (*c)->arr[ret].tele);
+	scanf("%s", (c)->arr[ret].tele);
 	printf("请输入地址:");
-	scanf("%s", (*c)->arr[ret].addr);
+	scanf("%s", (c)->arr[ret].addr);
 	printf("修改成功\n");
 }
-void Dallcontact(contact** c)
+void Dallcontact(contact* c)
 {
 	contact* pc = (contact*)malloc(sizeof(contact) + SPACE * sizeof(Node));
 	if (pc == NULL)
@@ -136,7 +136,16 @@ void Dallcontact(contact** c)
 		perror("malloc:");
 		return;
 	}
-	(*c)->sz = SPACE;
-	(*c)->num = 0;
+	(c)->sz = SPACE;
+	(c)->num = 0;
 	printf("清空成功\n");
+}
+void comp(const void* s1, const void* s2)
+{
+	return strcmp(((Node*)s1)->name, ((Node*)s2)->name);
+}
+void Sortcon(contact* c)
+{
+	qsort((c)->arr, (c)->num, sizeof(Node), comp);
+	printf("排序完成\n");
 }
