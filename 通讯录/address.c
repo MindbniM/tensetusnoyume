@@ -149,3 +149,57 @@ void Sortcon(contact* c)
 	qsort((c)->arr, (c)->num, sizeof(Node), comp);
 	printf("排序完成\n");
 }
+void Txtputcontact(contact* c)
+{
+	FILE* con=fopen("通讯录.txt", "w");
+	if (con == NULL)
+	{
+		perror("fopen:");
+		return;
+	}
+	for (int i = 0; i < (c)->num; i++)
+	{
+		fprintf(con,"%-20s%-5d%-5s%-12s%-30s\n",
+			(c)->arr[i].name, (c)->arr[i].age, (c)->arr[i].sex, (c)->arr[i].tele, (c)->arr[i].addr);
+	}
+	fclose(con);
+	printf("写入文件成功\n");
+}
+void Txtgetcontact(contact* c)
+{
+	FILE* con = fopen("通讯录.txt", "r");
+	if (con == NULL)
+	{
+		perror("fopen:");
+		return;
+	}
+	for (int i = 0; fscanf(con, "%s%d%s%s%s\n",
+		c->arr[i].name, &(c->arr[i].age), c->arr[i].sex, c->arr[i].tele, c->arr[i].addr) != EOF;
+		i++)
+	{
+		c->num += 1;
+		if (IsFull(c))
+		{
+			printf("通讯录已满,请扩展\n");
+			return;
+		}
+	}
+	fclose(con);
+	printf("读取文件成功\n");
+}
+void Txtcatcontact(contact* c)
+{
+	FILE* con = fopen("通讯录.txt", "a");
+	if (con == NULL)
+	{
+		perror("fopen:");
+		return;
+	}
+	for (int i = 0; i < (c)->num; i++)
+	{
+		fprintf(con, "%-20s%-5d%-5s%-12s%-30s\n",
+			(c)->arr[i].name, (c)->arr[i].age, (c)->arr[i].sex, (c)->arr[i].tele, (c)->arr[i].addr);
+	}
+	fclose(con);
+	printf("追加数据成功\n");
+}

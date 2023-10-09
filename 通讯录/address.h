@@ -45,3 +45,9 @@ void Dallcontact(contact* c);//清空联系人
 
 void Sortcon(contact*c);//按名称排序
 
+void Txtputcontact(contact* c);//写入文件(会重置数据)
+
+void Txtgetcontact(contact* c);//读取文件
+
+void Txtcatcontact(contact* c);//追加数据
+
