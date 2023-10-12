@@ -180,8 +180,7 @@ void Txtgetcontact(contact* c)
 		c->num += 1;
 		if (IsFull(c))
 		{
-			printf("通讯录已满,请扩展\n");
-			return;
+			Extend(c);
 		}
 	}
 	fclose(con);

@@ -30,6 +30,7 @@ int main()
 	contact* con;
 	con=Initcontact();
 	int select;
+	Txtgetcontact(con);
 	do
 	{
 		menu();
@@ -37,6 +38,7 @@ int main()
 		switch (select)
 		{
 		case Exit:
+			Txtputcontact(con);
 			free(con);
 			break;
 		case ADD:
