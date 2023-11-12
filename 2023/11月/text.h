@@ -33,7 +33,7 @@ void SListInsertAfter(SListNode* pos, SLTDateType x);
 // 分析思考为什么不删除pos位置？
 void SListEraseAfter(SListNode* pos);
 // 在pos的前面插入
-SListNode* SLTInsert(SListNode** pphead, SListNode* pos, SLTDateType x);
+void SLTInsert(SListNode** pphead, SListNode* pos, SLTDateType x);
 // 删除pos位置
 void SLTErase(SListNode** pphead, SListNode* pos);
-void SLTDestroy(SListNode** pphead);
+void SLTDestroy(SListNode** pplist);
