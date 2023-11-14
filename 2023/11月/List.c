@@ -91,3 +91,34 @@ void ListPopFront(ListNode* pHead)
 	free(pHeadnext);
 	pHeadnext = NULL;
 }
+ListNode* ListFind(ListNode* pHead, LTDataType x)
+{
+	assert(pHead);
+	ListNode* pHeadnext = pHead->next;
+	while (pHeadnext != pHead)
+	{
+		if (pHeadnext->data == x)
+			return pHeadnext;
+		pHeadnext = pHeadnext->next;
+	}
+	return NULL;
+}
+void ListInsert(ListNode* pos, LTDataType x)
+{
+	assert(pos);
+	ListNode* posprev = pos->prev;
+	ListNode* newNode = NodeCreate(x);
+	posprev->next = newNode;
+	newNode->prev = posprev;
+	pos->prev = newNode;
+	newNode->next = pos;
+}
+void ListErase(ListNode* pos)
+{
+	assert(pos);
+	ListNode* posprev = pos->prev;
+	posprev->next = pos->next;
+	pos->next->prev = posprev;
+	free(pos);
+	pos = NULL;
+}
