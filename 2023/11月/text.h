@@ -1,39 +1,63 @@
 #pragma once
-#include<math.h>
-#include<string.h>
+#include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
-#include<ctype.h>
-#include<stdio.h>
-typedef int SLTDateType;
-typedef struct SListNode
-{
-	SLTDateType data;
-	struct SListNode* next;
-}SListNode;
 
-// 动态申请一个节点
-SListNode* BuySListNode(SLTDateType x);
-// 单链表打印
-void SListPrint(SListNode* plist);
-// 单链表尾插
-void SListPushBack(SListNode** pplist, SLTDateType x);
-// 单链表的头插
-void SListPushFront(SListNode** pplist, SLTDateType x);
-// 单链表的尾删
-void SListPopBack(SListNode** pplist);
-// 单链表头删
-void SListPopFront(SListNode** pplist);
-// 单链表查找
-SListNode* SListFind(SListNode* plist, SLTDateType x);
-// 单链表在pos位置之后插入x
-// 分析思考为什么不在pos位置之前插入？
-void SListInsertAfter(SListNode* pos, SLTDateType x);
-// 单链表删除pos位置之后的值
-// 分析思考为什么不删除pos位置？
-void SListEraseAfter(SListNode* pos);
-// 在pos的前面插入
-void SLTInsert(SListNode** pphead, SListNode* pos, SLTDateType x);
-// 删除pos位置
-void SLTErase(SListNode** pphead, SListNode* pos);
-void SLTDestroy(SListNode** pplist);
+typedef int STDataType;
+typedef int QDataType;
+typedef struct Stack
+{
+	STDataType* arr;
+	int top;		// 栈顶
+	int capacity;  // 容量 
+}Stack;
+// 初始化栈 
+void StackInit(Stack* ps);
+// 入栈 
+void StackPush(Stack* ps, STDataType data);
+// 出栈 
+void StackPop(Stack* ps);
+// 获取栈顶元素 
+STDataType StackTop(Stack* ps);
+// 获取栈中有效元素个数 
+int StackSize(Stack* ps);
+// 检测栈是否为空，如果为空返回非零结果，如果不为空返回0 
+int StackEmpty(Stack* ps);
+// 销毁栈 
+void StackDestroy(Stack* ps);
+
+
+
+
+
+
+typedef struct QListNode
+{
+	QDataType data;
+	struct QListNode* next;
+}QNode;
+
+// 队列的结构 
+typedef struct Queue
+{
+	QNode* front;
+	QNode* rear;
+	int size;
+}Queue;
+
+// 初始化队列 
+void QueueInit(Queue* q);
+// 队尾入队列 
+void QueuePush(Queue* q, QDataType data);
+// 队头出队列 
+void QueuePop(Queue* q);
+// 获取队列头部元素 
+QDataType QueueFront(Queue* q);
+// 获取队列队尾元素 
+QDataType QueueBack(Queue* q);
+// 获取队列中有效元素个数 
+int QueueSize(Queue* q);
+// 检测队列是否为空，如果为空返回非零结果，如果非空返回0 
+int QueueEmpty(Queue* q);
+// 销毁队列 
+void QueueDestroy(Queue* q);
