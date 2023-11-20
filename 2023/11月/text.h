@@ -2,9 +2,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
+#include<stdbool.h>
 
 typedef int STDataType;
-typedef int QDataType;
 typedef struct Stack
 {
 	STDataType* arr;
@@ -30,7 +30,7 @@ void StackDestroy(Stack* ps);
 
 
 
-
+typedef int QDataType;
 typedef struct QListNode
 {
 	QDataType data;

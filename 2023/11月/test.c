@@ -68,7 +68,7 @@ void QueueInit(Queue* q)
 	q->front = q->rear = NULL;
 	q->size = 0;
 }
-// 队尾入队列 
+
 void QueuePush(Queue* q, QDataType data)
 {
 	assert(q);
@@ -92,7 +92,7 @@ void QueuePush(Queue* q, QDataType data)
 	}
 	q->size++;
 }
-// 队头出队列 
+
 void QueuePop(Queue* q)
 {
 	assert(q);
