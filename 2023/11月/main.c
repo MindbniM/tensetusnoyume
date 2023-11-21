@@ -1,4 +1,86 @@
 #include"text.h"
+#define SIZE(N,M)(int)(((N*)0)->M)
+//#define SIZE(N, M) (int)(&(((N*)0)->M))
+
+int main()
+{
+	printf("%d",SIZE(Stack,top));
+	return 0;
+}
+//typedef struct {
+//    int* arr;
+//    int front;
+//    int back;
+//    int k;
+//} MyCircularQueue;
+//
+//
+//MyCircularQueue* myCircularQueueCreate(int k) {
+//    MyCircularQueue* q = (MyCircularQueue*)malloc(sizeof(MyCircularQueue));
+//    q->arr = (int*)malloc(sizeof(int) * (k + 1));
+//    q->front = 0;
+//    q->back = 0;
+//    q->k = k;
+//    return q;
+//}
+//
+//bool myCircularQueueIsEmpty(MyCircularQueue* obj) {
+//    return obj->front == obj->back;
+//}
+//
+//bool myCircularQueueIsFull(MyCircularQueue* obj) {
+//    return (obj->front - obj->back + obj->k) % (obj->k + 1) == 0;
+//}
+//
+//bool myCircularQueueEnQueue(MyCircularQueue* obj, int value) {
+//    if (myCircularQueueIsFull(obj))
+//        return false;
+//    obj->arr[obj->back++] = value;
+//    obj->back %= (obj->k + 1);
+//    return true;
+//}
+//
+//bool myCircularQueueDeQueue(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//        return false;
+//    obj->front++;
+//    obj->front %= (obj->k + 1);
+//    return true;
+//}
+//
+//int myCircularQueueFront(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//        return -1;
+//    return obj->arr[obj->front];
+//}
+//
+//int myCircularQueueRear(MyCircularQueue* obj) {
+//    if (myCircularQueueIsEmpty(obj))
+//        return -1;
+//    int a = (obj->back + obj->k - 1) % obj->k;
+//    return obj->arr[a];
+//}
+//
+//
+//void myCircularQueueFree(MyCircularQueue* obj) {
+//    free(obj->arr);
+//    free(obj);
+//}
+//int main()
+//{
+//    MyCircularQueue* q= myCircularQueueCreate(3);
+//    myCircularQueueEnQueue(q,1);
+//    myCircularQueueEnQueue(q, 2);
+//    myCircularQueueEnQueue(q, 3);
+//    myCircularQueueEnQueue(q, 4);
+//    int a=myCircularQueueRear(q);
+//    bool b = myCircularQueueIsFull(q);
+//    myCircularQueueDeQueue(q);
+//    myCircularQueueEnQueue(q, 4);
+//    int c = myCircularQueueRear(q);
+//    myCircularQueueFree(q);
+//    //["MyCircularQueue","enQueue","enQueue","enQueue","enQueue","Rear","isFull","deQueue","enQueue","Rear"]
+//}
 //void test1()
 //{
 //	Stack s;
