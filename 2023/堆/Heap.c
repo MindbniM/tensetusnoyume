@@ -26,7 +26,7 @@ void AdjustUp(HPDataType* a, int child)
 	int parent = (child - 1) / 2;
 	while (child > 0)
 	{
-		if (a[child] < a[parent])
+		if (a[child] < a[parent])//***
 		{
 			Swap(&a[child], &a[parent]);
 			child = parent;
@@ -44,11 +44,11 @@ void AdjustDown(HPDataType* a,int size, int panest)
 	int child = panest * 2 + 1;
 	while (child<size)
 	{
-		if (child+1<size&&a[child] > a[child + 1])
+		if (child+1<size&&a[child] > a[child + 1])//***
 		{
 			child++;
 		}
-		if (a[panest] > a[child])
+		if (a[panest] > a[child])//***
 		{
 			Swap(&a[panest], &a[child]);
 			panest = child;

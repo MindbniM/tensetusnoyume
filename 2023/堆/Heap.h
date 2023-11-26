@@ -1,7 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #pragma once
 #include<stdio.h>
 #include<stdlib.h>
 #include<assert.h>
+#include<time.h>
 typedef int HPDataType;
 typedef struct Heap
 {
@@ -24,3 +26,9 @@ HPDataType HeapTop(Heap* hp);
 int HeapSize(Heap* hp);
 // ╤я╣деп©у
 int HeapEmpty(Heap* hp);
+
+void Swap(HPDataType* a, HPDataType* b);
+
+void AdjustUp(HPDataType* a, int child);
+
+void AdjustDown(HPDataType* a, int size, int panest);
