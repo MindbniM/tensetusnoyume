@@ -10,14 +10,13 @@ BTNode* BuyTreeNode(BTDataType x)
 
 	return node;
 }
-void BinaryTreeDestroy(BTNode** root)
+void BinaryTreeDestroy(BTNode* root)
 {
-	if (*root == NULL);
+	if (root == NULL);
 		return;
-	BinaryTreeDestroy(&(*root)->left);
-	BinaryTreeDestroy(&(*root)->right);
-	free(*root);
-	*root = NULL;
+	BinaryTreeDestroy(root->left);
+	BinaryTreeDestroy(root->right);
+	free(root);
 }
 int BinaryTreeSize(BTNode* root)
 {
@@ -92,4 +91,55 @@ BTNode* BinaryTreeCreate(BTDataType* a, int* pi)
 	newNode->left = BinaryTreeCreate(a, pi);
 	newNode->right = BinaryTreeCreate(a, pi);
 	return newNode;
+}
+void BinaryTreeLevelOrder(BTNode* root)
+{
+	Queue q;
+	QueueInit(&q);
+	QueuePush(&q, root);
+	int size = 1;
+	while (!QueueEmpty(&q))
+	{
+		while (size--)
+		{
+			BTNode* front = QueueFront(&q);
+			QueuePop(&q);
+			if(front->left!=NULL)
+				QueuePush(&q, front->left);
+			if (front->right != NULL)
+				QueuePush(&q, front->right);
+			printf("%c ", front->data);
+		}
+		size = QueueSize(&q);
+		printf("\n");
+	}
+	QueueDestroy(&q);
+}
+int BinaryTreeComplete(BTNode* root)
+{
+
+	Queue q;
+	QueueInit(&q);
+	QueuePush(&q, root);
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		if (front == NULL)
+			break;
+		QueuePush(&q, front->left);
+		QueuePush(&q, front->right);
+	}
+	while (!QueueEmpty(&q))
+	{
+		BTNode* front = QueueFront(&q);
+		QueuePop(&q);
+		if (front != NULL)
+		{
+			QueueDestroy(&q);
+			return 0;
+		}
+	}
+	QueueDestroy(&q);
+	return 1;
 }
