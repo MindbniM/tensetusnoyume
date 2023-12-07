@@ -127,7 +127,9 @@ void HeapSort(int* a, int n)
 }
 int PartSort1(int* a, int left, int right)
 {
-	int keyi = left;
+	int keyi = Getmind(a, left, right);
+	Swap(&a[left], &a[keyi]);
+	keyi = left;
 	while (left < right)
 	{
 		while (left < right && a[right] >= a[keyi])
@@ -141,14 +143,78 @@ int PartSort1(int* a, int left, int right)
 }
 int PartSort2(int* a, int left, int right)
 {
-
+	int keyi = Getmind(a, left, right);
+	int temp = a[keyi];
+	Swap(&a[left], &a[keyi]);
+	int bol=left;
+	while (left < right)
+	{
+		while (left < right && a[right] >= temp)
+			right--;
+		a[bol] = a[right];
+		bol = right;
+		while (left < right && a[left] <= temp)
+			left++;
+		a[bol] = a[left];
+		bol = left;
+	}
+	a[left] = temp;
+	return left;
+}
+int PartSort3(int* a, int left, int right)
+{
+	int keyi = Getmind(a,left,right);
+	Swap(&a[left], &a[keyi]);
+	keyi = left;
+	int prev = left;
+	int cur = left + 1;
+	while (cur <= right)
+	{
+		if (a[cur] < a[keyi])
+		{
+			prev++;
+			Swap(&a[prev], &a[cur]);
+		}
+		cur++;
+	}
+	Swap(&a[keyi], &a[prev]);
+	return prev;
+}
+int Getmind(int* a, int left, int right)
+{
+	int mind = (left + right) / 2;
+	if (a[left] > a[mind]&&a[left]>a[right])
+	{
+		if (a[mind] > a[right])
+			return mind;
+		else
+			return right;
+	}
+	if (a[right] > a[mind] && a[right] > a[left])
+	{
+		if (a[mind] > a[left])
+			return mind;
+		else
+			return left;
+	}
+	if (a[mind] > a[left] && a[mind] > a[right])
+	{
+		if (a[left] > a[right])
+			return left;
+		else
+			return right;
+	}
 }
 void QuickSort(int* a, int begin, int end)
 {
 	if (begin >= end)
 		return;
 	int keyi = PartSort1(a, begin, end);
-	QuickSort(a, begin, keyi - 1);
-	QuickSort(a, keyi + 1, end);
-	
+	if (end - begin > 10)
+	{
+		QuickSort(a, begin, keyi - 1);
+		QuickSort(a, keyi + 1, end);
+	}
+	else
+		InsertSort(a, end - begin + 1);
 }
