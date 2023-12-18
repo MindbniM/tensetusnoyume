@@ -40,12 +40,20 @@ void Test5()
 	Data d2(2023, 12, 13);
 	
 }
+void Test6()
+{
+	Data d(2022, 4, 12);
+	std::cout << d;
+	std::cin >> d;
+	std::cout << d;
+}
 int main()
 {
 	//Test1();
 	//Test2();
 	//Test3();
 	//Test4();
-	Test5();
+	//Test5();
+	Test6();
 	return 0;
 }

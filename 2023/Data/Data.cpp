@@ -1,9 +1,9 @@
 #include"Data.h"
 Data::Data(int year, int month, int day)
+	:_year(year)
+	,_month(month)
+	,_day(day)
 {
-	_year = year;
-	_month = month;
-	_day = day;
 	if (_year < 0 || _month<0 || _day < 0 || _month>12 || _day>GetMonthDay())
 	{
 		assert(false);
@@ -27,7 +27,7 @@ Data::~Data()
 }
 void Data::Print()
 {
-	cout << _year << '/' << _month << '/' << _day << endl;
+	std::cout << _year << '/' << _month << '/' << _day << std::endl;
 }
 int Data::GetMonthDay()
 {
@@ -64,7 +64,7 @@ Data& Data::operator+=(int day)
 	}
 	return *this;
 }
-Data Data::operator+(int day)
+Data Data::operator+(int day) const
 {
 	Data d(*this);
 	d += day;
@@ -87,7 +87,7 @@ Data& Data::operator-=(int day)
 	}
 	return *this;
 }
-Data Data::operator-(int day)
+Data Data::operator-(int day) const
 {
 	Data d(*this);
 	d -= day;
@@ -115,11 +115,11 @@ Data Data::operator--(int)
 	this->operator-=(1);
 	return d;
 }
-bool Data::operator==(const Data& d)
+bool Data::operator==(const Data& d) const
 {
 	return _year == d._year && _month == d._month && _day == d._day;
 }
-bool Data::operator>(const Data& d)
+bool Data::operator>(const Data& d) const
 {
 	if (_year > d._year)
 		return true;
@@ -136,21 +136,31 @@ bool Data::operator>(const Data& d)
 	return false;
 }
 
-bool Data::operator>=(const Data& d)
+bool Data::operator>=(const Data& d) const
 {
 	return *this > d || *this == d;
 }
-bool Data::operator<(const Data& d)
+bool Data::operator<(const Data& d) const
 {
 	return !(*this >= d);
 }
-bool Data::operator<=(const Data& d)
+bool Data::operator<=(const Data& d) const
 {
 	return !(*this > d);
 }
-bool Data::operator!=(const Data& d)
+bool Data::operator!=(const Data& d) const
 {
 	return !(*this == d);
+}
+std::ostream& MindbniM::operator<<(std::ostream& out, const Data& d)
+{
+	out << d._year <<"/"<< d._month << "/"<< d._day  << std::endl;
+	return out;
+}
+std::istream& MindbniM::operator>>(std::istream& in,  Data& d)
+{
+	in >> d._year>>d._month>>d._day;
+	return in;
 }
 
 
