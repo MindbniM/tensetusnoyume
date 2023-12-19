@@ -42,10 +42,9 @@ void Test5()
 }
 void Test6()
 {
-	Data d(2022, 4, 12);
-	std::cout << d;
-	std::cin >> d;
-	std::cout << d;
+	Data* a = new Data[5]{ Data(2023, 12, 16),Data(2000,10,5)};
+	
+	delete[] a;
 }
 int main()
 {
