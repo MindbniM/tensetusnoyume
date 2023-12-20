@@ -42,9 +42,19 @@ void Test5()
 }
 void Test6()
 {
-	Data* a = new Data[5]{ Data(2023, 12, 16),Data(2000,10,5)};
-	
-	delete[] a;
+	std::list<Data> li;
+	li.push_back(Data(2022, 10, 1));
+	li.push_back(Data(2023, 10, 1));
+	li.push_back(Data(2024, 10, 1));
+	li.push_back(Data(2025, 10, 1));
+	li.pop_front();
+	std::list<Data>::iterator lis = li.begin();
+	while (lis != li.end())
+	{
+		std::cout << *lis << " ";
+		lis++;
+	}
+	std::cout << std::endl;
 }
 int main()
 {
