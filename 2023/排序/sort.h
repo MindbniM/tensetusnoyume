@@ -1,16 +1,32 @@
 #pragma once
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<math.h>
+#include<assert.h>
+#include<stdbool.h>
+
 
 void Prin(int* a, int n);
 
-void InsertSort(int* a, int n);
+void InsertSort(int* a, int n);//≤Â»Î≈≈–Ú
 
-void ShellSort(int* a, int n);
+void ShellSort(int* a, int n);//œ£∂˚≈≈–Ú
 
-void SelectSort(int* a, int n);
+void SelectSort(int* a, int n);//—°‘Ò≈≈–Ú
 
-void HeapSort(int* a, int n);
+void HeapSort(int* a, int n);//∂—≈≈–Ú
 
-void QuickSort(int* a, int begin, int end);
+void BubbleSort(int* a, int n);
+
+void QuickSort(int* a, int begin, int end);//øÏ≈≈
+
+void QuickNonRSort(int* a, int begin, int end);//øÏ≈≈∑«µ›πÈ
+
+void QSort(int* a, int begin, int end);//øÏ≈≈”≈ªØ
+
+void MergeSort(int* a, int n);//πÈ≤¢≈≈–Ú
+
+void MergeNonRSort(int* a, int n);//πÈ≤¢∑«µ›πÈ
+
+void CountSort(int* a, int n);//º∆ ˝≈≈–Ú

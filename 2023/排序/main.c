@@ -1,45 +1,13 @@
 #include"sort.h"
-void InsertSortTest()
+void SortTest(void(*Sort)(int*,int))
 {
-	int a[] = { 9,8,7,6,5,4,3,2,1,6, };
-	Prin(a, 10);
-	InsertSort(a, 10);
-	Prin(a, 10);
-}
-void ShellSortTest()
-{
-	int a[] = { 9,8,7,6,5,4,3,2,1,6, };
-	Prin(a, 10);
-	ShellSort(a, 10);
-	Prin(a, 10);
-}
-void SelectSortTest()
-{
-	int a[] = { 9,8,7,6,5,4,3,2,1,6, };
-	Prin(a, 10);
-	SelectSort(a, 10);
-	Prin(a, 10);
-}
-void HeapSortTest()
-{
-	int a[] = { 9,8,7,6,5,4,3,2,1,6, };
-	Prin(a, 10);
-	HeapSort(a, 10);
-	Prin(a, 10);
-}
-void QuickSortTest()
-{
-	int a[] = { 9,8,7,6,5,4,3,2,1,6, };
-	Prin(a, 10);
-	QuickSort(a,0,9);
-	Prin(a, 10);
+	int a[] = { 8,8,8,6,5,8,3,2,8,7,8,8,16,15,14,12 };
+	Prin(a, 16);
+	Sort(a, 16);
+	Prin(a, 16);
 }
 int main()
 {
-	//InsertSortTest();
-	//ShellSortTest();
-	//SelectSortTest();
-	//HeapSortTest();
-	QuickSortTest();
+	SortTest(CountSort);
 	return 0;
 }
