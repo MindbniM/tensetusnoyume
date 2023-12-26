@@ -16,6 +16,7 @@ public:
 	friend BTree* BinaryTreeCreate(BTDataType* a, int* pi);
 	friend void BinaryTreeDestroy(BTree* root);
 
+	int TreeHeight();
 	// 二叉树节点个数
 	int BinaryTreeSize();
 	// 二叉树叶子节点个数
@@ -28,6 +29,7 @@ public:
 	void BinaryTreePrevOrder();
 	// 二叉树中序遍历
 	void BinaryTreeInOrder();
+	void BinaryNTreeInOrder();
 	// 二叉树后序遍历
 	void BinaryTreePostOrder();
 	// 层序遍历

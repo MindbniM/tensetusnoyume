@@ -11,6 +11,12 @@ BTree::~BTree()
 	_left = NULL;
 	_right = NULL;
 }
+int BTree::TreeHeight()
+{
+	if (this == nullptr)
+		return 0;
+	return fmax(this->_left->TreeHeight(), this->_right->TreeHeight()) + 1;
+}
 void BinaryTreeDestroy(BTree* root)
 {
 	if (root == NULL)
@@ -139,4 +145,12 @@ bool BTree::BinaryTreeComplete()
 		}
 	}
 	return 1;
+}
+void BTree::BinaryNTreeInOrder()
+{
+	if (this == NULL)
+		return;
+	this->_right->BinaryTreePrevOrder();
+	printf("%c ", this->_data);
+	this->_left->BinaryTreePrevOrder();
 }
