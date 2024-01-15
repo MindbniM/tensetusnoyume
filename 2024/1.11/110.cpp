@@ -1,20 +1,28 @@
 #include<iostream>
+#include<vector>
 using std::cout;
 using std::endl;
 using std::cin;
-template<class T>
-void swap(T&a,T&b)
-{
-    T c=a;
-    a=b;
-    b=c;
-}
 int main()
 {
-   int a=1,b=2;
-   char c='a',d='b';
-   swap<int>(a,b);
-   swap<char>(c,d);
-   cout<<a <<" "<<b<<endl;
-   cout<<c<<" "<<d<<endl;
+    std::vector<char> s;
+    s.push_back('a');
+    s.push_back('b');
+    s.push_back('c');
+    s.push_back('d');
+    s.push_back('e');
+    std::vector<char>::iterator it=s.begin();
+    std::vector<char>::iterator end=s.end();
+    while(it!=end)
+    {
+        char a=*it;
+        *it=*end;
+        *end=a;
+        it++;
+        end--;
+    }
+    for(auto e:s)
+    {
+        cout<<e<<" "<<endl;
+    }
 }
