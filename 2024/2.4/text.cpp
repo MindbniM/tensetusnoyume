@@ -1,37 +1,42 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <vector>
+#include<list>
+#include<queue>
 #include<unordered_map>
 using namespace std;
-class Person {
+class Solution {
 public:
-	virtual void f() 
-	{
-		cout << "person::f()" << endl;
-	}
-	void fun()
-	{
-		cout << "void person:: fun()" << endl;
-	}
+    vector<string> vs{ "","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz" };
+    void fun(vector<string>& s, string& str, int n, string ss)
+    {
+        if (n>=str.size())
+            return;
+        string s1 = vs[str[n]-'0'];
+        for (int i = 0; i < s1.size(); i++)
+        {
+            char c = s1[i];
+            string s2 = ss;
+            ss += c;
+            if (ss.size() == str.size())
+            {
+                s.push_back(ss);
+                ss = s2;
+            }
+            fun(s, str, n+1, ss);
+            ss = s2;
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+        vector<string> v;
+        string ss;
+        fun(v, digits, 0, ss);
+        return v;
+    }
 };
-class Student : public Person {
-public:
-	virtual void f()
-	{
-		cout << "student:: f()" << endl;
-	}
-	void fun()
-	{
-		cout << "void student::fun()" << endl;
-	}
-};
-
 int main()
 {
-	Person a;
-	Student s;
-	Person& p = s;
-	p.f();
-	p.fun();
-	return 0;
+    string s("234");
+    vector<string> vv=Solution().letterCombinations(s);
+    return 0;
 }
