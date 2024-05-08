@@ -1,56 +1,58 @@
-﻿#include <iostream>
-#include<vector>
-#include<fstream>
-using namespace std;
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param board string字符串vector
-     * @param word string字符串
-     * @return bool布尔型
-     */
-    int arr1[4] = { -1,1,0,0 };
-    int arr2[4] = { 0,0,-1,1 };
-    bool gets(vector<string>& b, string& w, int s, int i, int j, vector<vector<bool>>& vb)
-    {
-        if (s >= w.size()) return true;
-        for (int si = 0; si < 4; si++)
-        {
-            int ni = i + arr1[si], nj = j + arr2[si];
-            if (vb[ni][nj] && w[s] == b[ni][nj])
-            {
-                vb[ni][nj] = false;
-                cout << b[ni][nj];
-                if (gets(b, w, s + 1, ni, nj, vb)) return true;
-                vb[ni][nj] = true;
-            }
-        }
-        return false;
-    }
-    bool exist(vector<string>& board, string word) {
-        vector<vector<bool>> vb(board.size(), vector<bool>(board[0].size(), true));
-        for (int i = 0; i < board.size(); i++)
-        {
-            for (int j = 0; j < board[0].size(); j++)
-            {
-                if (word[0] == board[i][j])
-                {
-                    vb[i][j] = false;
-                    if (gets(board, word, 1, i, j, vb)) return true;
-                    vb = vector<vector<bool>>(board.size(), vector<bool>(board[0].size(), true));
-                }
-            }
-        }
-        return false;
-    }
-};
+﻿#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#define N 10
+int fun(int* p, size_t size, int n,int* temp)
+{
+	if (p == NULL) return 0;
+	int** dp = (int**)malloc(sizeof(int*) * (size + 1));
+	for (int i = 0; i <= size; i++) dp[i] = (int*)calloc(sizeof(int), n + 1);
+	int** dest = (int**)malloc(sizeof(int*) * (size + 1));
+	for (int i = 0; i <= size; i++) dest[i] = (int*)calloc(sizeof(int), n + 1);
+	for (int i = 1; i <= size; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			dp[i][j] = dp[i - 1][j];
+			if (j - i >= 0 && (dp[i][j - i] + p[i - 1] > dp[i][j]))
+			{
+				dp[i][j] = dp[i][j - i] + p[i - 1];
+				dest[i][j] = 1;
+			}
+		}
+	}
+	int r_ret = dp[size][n];
+	int i = size, j = n;
+	while (i > 0)
+	{
+		if (dest[i][j] == 1)
+		{
+			temp[i-1]++;
+			j -= i;
+		}
+		else i--;
+	}
+	for (int i = 0; i <= size; i++) free(dp[i]);
+	free(dp);
+	for (int i = 0; i <= size; i++) free(dest[i]);
+	free(dest);
+	return r_ret;
+
+}
 int main()
 {
-    vector<string> vs= { "XYZE", "SFZS", "XDEE"};
-    string str = "XYZZED";
-    cout<<Solution().exist(vs,str);
-    return 0;
+	int p[N] = { 1,5,8,9,10,17,17,20,24,24 };
+	int temp[N] = { 0 };
+	int n = 0;
+	scanf("%d", &n);
+	printf("最大销售额:%d\n", fun(p, N, n,temp));
+	printf("最优切割方案为:\n");
+	for (int i = 0; i < N; i++)
+	{
+		if (temp[i] != 0) printf("\t %d 块 %d 米的\n", temp[i], i + 1);
+	}
+
+	return 0;
 }
