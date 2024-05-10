@@ -1,26 +1,49 @@
-#include<iostream>
+﻿#include<iostream>
+#include<unordered_set>
 #include<vector>
-#include<utility>
-#include"hash_bucket.h"
-#include"unordered_set.h"
-#include"unordered_map.h"
+#include<string>
+using namespace std;
 int main()
 {
-	unordered_map<int,int> hash;
-	hash[4] = 1;
-	hash[14] = 7;
-	hash[5] = 6;
-	hash[3] = 3;
-	hash[8] = 0;
-	unordered_map<int,int>::iterator it = hash.begin();
-	/*while (it != hash.end())
-	{
-		std::cout << (*it).first << " "<<(*it).second<<std::endl;
-		it = hash.erase((*it).first);
-	}*/
-	for (auto& p : hash)
-	{
-		std::cout << p.first << " " << p.second << std::endl;
-	}
-	return 0;
+    int n;
+    cin >> n;
+    for (int o = 0; o < n; o++)
+    {
+        int m;
+        cin >> m;
+        vector<string> vs(m);
+        for (int i = 0; i < m; i++)
+        {
+            cin >> vs[i];
+        }
+        unordered_set<char> hash;
+        int i = 0;
+        m--;
+        while (i != m && i != m - 1)
+        {
+            hash.clear();
+            int coun = 0;
+            for (auto c : vs[i]) hash.insert(c);
+            for (auto c : vs[m])
+            {
+                if (hash.count(c))
+                {
+                    coun = 1;
+                    break;
+                }
+            }
+            if (coun == 0)
+            {
+                cout << "No" << endl;
+                break;
+            }
+            i++;
+            m--;
+        }
+        if (i == m || i == m - 1)
+        {
+            cout << "Yes" << endl;
+        }
+    }
+    return 0;
 }
