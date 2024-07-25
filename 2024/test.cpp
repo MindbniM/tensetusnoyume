@@ -1,20 +1,31 @@
-#include"graph.hpp"
+#include<iostream>
+#include<vector>
+#include<thread>
+#include<memory>
+#include<format>
+#include<iostream>
+#include<memory>
+using namespace std;
+template<class T,class index>
+decltype(auto) at( T&& v, index n)
+{
+	return forward<T>(v)[n];
+}
+template<typename Container, typename Index>    //最终的C++11版本
+auto authAndAccess(Container&& c, Index i) -> decltype(std::forward<Container>(c)[i])
+{
+	authenticateUser();
+	return std::forward<Container>(c)[i];
+}
+
 int main()
 {
-	matrix::graph<char, int> g({'a', 'b','c','d','e','f','g','h','i'});
-	g.insert_edge('a', 'b', 4);
-	g.insert_edge('a', 'h', 8);
-	g.insert_edge('b', 'c', 8);
-	g.insert_edge('b', 'h', 11);
-	g.insert_edge('c', 'i', 2);
-	g.insert_edge('c', 'f', 4);
-	g.insert_edge('c', 'd', 7);
-	g.insert_edge('d', 'f', 14);
-	g.insert_edge('d', 'e', 9);
-	g.insert_edge('e', 'f', 10);
-	g.insert_edge('f', 'g', 2);
-	g.insert_edge('g', 'h', 1);
-	g.insert_edge('g', 'i', 6);
-	g.insert_edge('h', 'i', 7);
+	vector<int> v = { 1,2,4 };
+	at(v, 2) = 1;
+	for (auto& i : v)
+	{
+		cout << i << " ";
+	}
+	cout << endl;
 	return 0;
 }
