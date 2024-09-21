@@ -1,16 +1,21 @@
 #include<iostream>
-#include<vector>
 #include<thread>
-#include<memory>
-#include<format>
-#include<iostream>
-#include<memory>
+#include<functional>
+#include<chrono>
+#include<future>
 using namespace std;
+int test()
+{
+	return 1;
+}
 int main()
 {
-	bool a=true;
-	bool& b = a;
-	b = false;
-	cout << a << endl;
+	std::packaged_task<int()> task(test);
+	thread t([&task]
+		{
+			task();
+		});
+	t.join();
+	cout << task.get_future().get() << endl;
 	return 0;
 }
