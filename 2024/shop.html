@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="number"] {
+            width: 60px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>购物车</h1>
+
+    <table id="cartTable">
+        <thead>
+            <tr>
+                <th>商品名称</th>
+                <th>数量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 动态加载商品 -->
+        </tbody>
+    </table>
+
+    <script>
+        // 页面加载时从后端获取购物车商品数据
+        window.onload = function() {
+            fetch('/shop')
+            .then(response => response.json())
+            .then(data => {
+                const cartTableBody = document.querySelector('#cartTable tbody');
+
+                // 清空表格内容
+                cartTableBody.innerHTML = '';
+
+                // 遍历后端返回的商品数据，动态插入表格
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    
+                    // 创建商品名称单元格
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.name;
+                    row.appendChild(nameCell);
+                    
+                    // 创建商品数量单元格，并用input类型的number展示
+                    const quantityCell = document.createElement('td');
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.min = 0;
+                    quantityInput.value = item.quantity;
+                    quantityInput.addEventListener('change', function() {
+                        updateQuantity(item.name, quantityInput.value);
+                    });
+                    quantityCell.appendChild(quantityInput);
+                    row.appendChild(quantityCell);
+                    
+                    // 添加这一行到表格中
+                    cartTableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('获取购物车数据失败:', error);
+                alert('加载购物车数据失败');
+            });
+        };
+
+        // 当商品数量发生变化时，向后端发送AddShop请求
+        function updateQuantity(productName, newQuantity) {
+            const cartData = {
+                name: productName,
+                quantity: newQuantity
+            };
+
+            // 使用Fetch API向后端发送AddShop请求
+            fetch('/AddShop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cartData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('购物车更新成功:', data);
+            })
+            .catch(error => {
+                console.error('更新购物车失败:', error);
+                alert('更新购物车失败');
+            });
+        }
+    </script>
+
+</body>
+</html>
