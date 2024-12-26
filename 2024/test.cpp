@@ -1,44 +1,28 @@
 #include <iostream>
+#include<vector>
+#include<algorithm>
+#include<string>
 using namespace std;
-long long v[10];
-long long sum[10];
-int h1[10] = { 0,1,1,2,2,3,3,4,4,5 };
-int h2[10] = { 0,0,1,1,2,2,3,3,4,4 };
 int main()
 {
 	ios::sync_with_stdio(0);
-	string str;
-	cin >> str;
-	v[0] = 1;
-	sum[0] = 0;
-	int n = str.size();
-	for (int i = 1; i < n; i++)
-	{
-		v[i] = v[i - 1] * 5;
-		sum[i] = sum[i - 1];
-		if (i % 2 == 0) sum[i] += v[i - 1] * 4;
-		else sum[i] += v[i];
-	}
-	long long num = 0;
-	if (n > 1) num = sum[n - 1];
-	//cout << num << endl;
+	int n;
+	cin >> n;
+	int ret = 0;
+	if (n > 30) ret += n - 30;
+	n = min(n, 30);
+	vector<int> v(n);
+	vector<int> arr(n);
+	arr[0] = 1, arr[1] = 1;
+	for (int i = 0; i < n; i++) cin >> v[i];
+	for (int i = 3; i < n; i++) arr[i] = arr[i - 1] + arr[i - 2];
 	for (int i = 0; i < n; i++)
 	{
-		if ((n - i) % 2 == 0)
+		for (int j = 0; j < n; j++)
 		{
-			int temp=h1[str[i] - '0'];
-			if (i == 0) temp--;
-			num += temp * v[n - i - 1];
-			if ((str[i]-'0') % 2 != 0) break;
-		}
-		else
-		{
-			int temp=h2[str[i] - '0'];
-			num += temp * v[n - i - 1];
-			if (i==n-1&&(str[i] - '0') % 2 == 1) num++;
-			if ((str[i]-'0') % 2 != 1) break;
+
 		}
 	}
-	cout << num;
-	return 0;
+	int ret = 0;
+
 }
